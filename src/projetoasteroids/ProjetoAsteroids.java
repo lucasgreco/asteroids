@@ -31,6 +31,10 @@ public class ProjetoAsteroids {
     
     private static final int RESPAWN_COOLDOWN_LIMIT = 100;
     
+    private static final int INVULN_COOLDOWN_LIMIT = 0;
+    
+    private static final int DISPLAY_LEVEL_LIMIT = 60;
+    
     //Lista de entidades na Tela
     private List<Sprite> entidades;
     
@@ -70,6 +74,10 @@ public class ProjetoAsteroids {
     //tempo imune
     private int deathCooldown;
     
+    private int showLevelCooldown;
+    
+    private int restartCooldown;
+    
     public Window janela;
     
     /**
@@ -98,8 +106,9 @@ public class ProjetoAsteroids {
         
       
         while(executando){
-            background.draw();
-                        
+            
+                background.draw();
+                updateGame();        
                 Iterator<Sprite> iter = getEntidades().iterator();
 		while(iter.hasNext()) {
 			Sprite entidade = iter.next();
@@ -110,7 +119,9 @@ public class ProjetoAsteroids {
 			if(entidade != getPlayer() || this.canDrawPlayer()) {
 				//Draw the entity at it's actual position, and reset the transformation.
 				entidade.draw();
-				
+				if(entidade != getPlayer()){
+                                    entidade.update();
+                                }
                                 
 				double x = (entidade.x < entidade.width) ? entidade.x + WORLD_SIZEX
 						: (entidade.x > WORLD_SIZEX - entidade.width) ? entidade.x - WORLD_SIZEX : entidade.x;
@@ -170,6 +181,122 @@ public class ProjetoAsteroids {
 	resetListaEntidades();
     }
     
+    private void updateGame() {
+        
+        /*
+		 * Here we add any pending entities to the world.
+		 * 
+		 * Two lists are required because we will frequently add entities to the
+		 * world while we are iterating over them, which causes all sorts of
+		 * errors.
+		 */
+		entidades.addAll(novas_entidades);
+		novas_entidades.clear();
+                
+                /*
+		 * Decrement the restart cooldown.
+		 */
+		if(restartCooldown > 0) {
+			this.restartCooldown--;
+		}
+                
+                /*
+		 * Decrement the show level cooldown.
+		 */
+		if(showLevelCooldown > 0) {
+			this.showLevelCooldown--;
+		}
+                
+                /*
+		 * Restart the game if needed.
+		 */
+		if(isGameOver && restartGame) {
+			//reiniciar();
+		}
+                
+                /*
+		 * If the game is currently in progress, and there are no enemies left alive,
+		 * we prepare the next level.
+		 */
+		if(!isGameOver && areEnemiesDead()) {
+			//Increment the current level, and set the show level cooldown.
+			this.level++;
+			this.showLevelCooldown = DISPLAY_LEVEL_LIMIT;
+			
+			//Reset the entity lists (to remove bullets).
+			resetListaEntidades();
+			
+			//Reset the player's entity to it's default state, and re-enable firing.
+			//nave.reset();
+			//nave.setFiringEnabled(true);
+			
+			//Add the asteroids to the world.
+			for(int i = 0; i < level + 2; i++) {
+				registraEntidade(new Asteroid(random));
+			}
+		}
+                
+                /*
+		 * If the player has recently died, decrement the cooldown and handle any
+		 * special cases when they occur.
+		 */
+		if(deathCooldown > 0) {
+			this.deathCooldown--;
+			switch(deathCooldown) {
+			
+			//Reset the entity to it's default spawn state, and disable firing.
+			case RESPAWN_COOLDOWN_LIMIT:
+				//nave.reset();
+				//nave.setFiringEnabled(false);
+				break;
+			
+			//Re-enable the ability to fire, as we're no longer invulnerable.
+			case INVULN_COOLDOWN_LIMIT:
+				//nave.setFiringEnabled(true);
+				break;
+			
+			}
+		}
+                
+                /*
+		 * Only run any of the update code if we're not currently displaying the
+		 * level to the player.
+		 */
+		if(showLevelCooldown == 0) {
+                    //Iterate through the Entities and update their states.
+			for(Sprite entity : entidades) {
+				entity.draw();
+			}
+                        
+                        for(int i = 0; i < entidades.size(); i++) {
+				Sprite a = entidades.get(i);
+				for(int j = i + 1; j < entidades.size(); j++) {
+					Sprite b = entidades.get(j);
+					if(i != j && a.collided(b) && ((a != nave && b != nave) || deathCooldown <= INVULN_COOLDOWN_LIMIT)) {
+						//a.handleCollision(this, b);
+						//b.handleCollision(this, a);
+					}
+				}
+			}
+                        
+                        Iterator<Sprite> iter = entidades.iterator();
+			//while(iter.hasNext()) {
+				//if(iter.next().needsRemoval()) {
+				//	iter.remove();
+				//}
+			//}
+		}
+	}
+    
+    private boolean areEnemiesDead() {
+		for(Sprite e : entidades) {
+			if(e.getClass() == Asteroid.class) {
+				return false;
+			}
+		}
+		return true;
+	}
+    
     private void resetListaEntidades(){
         novas_entidades.clear();
 	entidades.clear();
@@ -187,5 +314,15 @@ public class ProjetoAsteroids {
     public List<Sprite> getEntidades() {
 		return entidades;
     }
+   
+    public void addScore(int score) {
+		this.pontuacao += score;
+	}
     
+    public Random getRandom() {
+		return random;
+	}
+    public void registraEntidade(Sprite entity) {
+		novas_entidades.add(entity);
+	}
 }

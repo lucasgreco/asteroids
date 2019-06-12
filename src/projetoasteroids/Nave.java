@@ -26,4 +26,9 @@ public class Nave extends Sprite{
     public void atira(boolean estado){
         
     }
+    
+    
+    public void update(ProjetoAsteroids game){
+        this.update();
+    }
 }

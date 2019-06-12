@@ -6,6 +6,7 @@
 package projetoasteroids;
 
 import java.util.Random;
+import jplay.GameObject;
 import jplay.Sprite;
 
 /**
@@ -49,10 +50,20 @@ public class Asteroid extends Sprite{
     
     private Vector2 position;
     
+    protected Vector2 velocity;
+    
+    
     public Asteroid(Random random) {
-		super(calculatePosition(random), calculateVelocity(random), AsteroidSize.Large.sprite, AsteroidSize.Large.killValue);
+		super(AsteroidSize.Large.sprite);
+                //super("sprites/meteorBrown_big1.png");
 		this.rotationSpeed = -MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
 		this.size = AsteroidSize.Large;
+                this.x = calculatePosition(random).x;
+                this.y = calculatePosition(random).y;
+                this.height = (int)size.raio;
+                this.width = (int)size.raio;
+                this.velocity = calculateVelocity(random);
+                
 	}
     
     /**
@@ -62,16 +73,22 @@ public class Asteroid extends Sprite{
 	 * @param random The Random instance.
 	 */
 	public Asteroid(Asteroid parent, AsteroidSize size, Random random) {
-		super(new Vector2(parent.position), calculateVelocity(random), size.sprite, size.killValue);
+                super(size.sprite);
+                this.size = size;
+                Vector2 vetornovo = new Vector2(parent.position);
+                this.x = vetornovo.x;
+                this.y = vetornovo.y;
+                this.velocity = calculateVelocity(random);
 		this.rotationSpeed = MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
-		this.size = size;
+                this.height = (int)size.raio;
+                this.width = (int)size.raio;
 		
 		/*
 		 * While not necessary, calling the update method here makes the asteroid
 		 * appear to have a different starting position than it's parent or sibling.
 		 */
 		for(int i = 0; i < SPAWN_UPDATES; i++) {
-			update(null);
+			atualiza(null);
 		}
 	}
 	
@@ -95,8 +112,21 @@ public class Asteroid extends Sprite{
 	}
 	
 	
-	public void update(ProjetoAsteroids game) {
+	public void atualiza(ProjetoAsteroids game) {
 		game.janela.update();
+                position.add(velocity);
+		if(position.x < 0.0f) {
+			position.x += ProjetoAsteroids.WORLD_SIZEX;
+                        this.x += ProjetoAsteroids.WORLD_SIZEX;
+		}
+		if(position.y < 0.0f) {
+			position.y += ProjetoAsteroids.WORLD_SIZEY;
+                        this.y += ProjetoAsteroids.WORLD_SIZEY;
+		}
+		position.x %= ProjetoAsteroids.WORLD_SIZEX;
+                this.x %= ProjetoAsteroids.WORLD_SIZEX;
+		position.y %= ProjetoAsteroids.WORLD_SIZEY;
+                this.y %= ProjetoAsteroids.WORLD_SIZEY;
 		rotate(rotationSpeed); //Rotate the image each frame.
 	}
         
@@ -110,8 +140,18 @@ public class Asteroid extends Sprite{
 		g.drawPolygon(size.polygon); //Draw the Asteroid.
 	}
 	*/
-	/*
-	public void handleCollision(Game game, Entity other) {
+	public int getKillScore() {
+		return this.size.killValue;
+	}
+	
+	/**
+	 * Flags that this Entity should be removed from the world.
+	 */
+	public void flagForRemoval() {
+		this.needsRemoval = true;
+	}
+        
+	public void handleCollision(ProjetoAsteroids game, GameObject other) {
 		//Prevent collisions with other asteroids.
 		if(other.getClass() != Asteroid.class) {
 			//Only spawn "children" if we're not a Small asteroid.
@@ -121,7 +161,7 @@ public class Asteroid extends Sprite{
 				
 				//Create the children Asteroids.
 				for(int i = 0; i < 2; i++) {
-					game.registerEntity(new Asteroid(this, spawnSize, game.getRandom()));
+					game.registraEntidade(new Asteroid(this, spawnSize, game.getRandom()));
 				}
 			}
 			
@@ -132,5 +172,5 @@ public class Asteroid extends Sprite{
 			game.addScore(getKillScore());		
 		}
 	}
-    */
+    
 }
