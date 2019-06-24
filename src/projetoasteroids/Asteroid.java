@@ -13,7 +13,7 @@ import jplay.Sprite;
  *
  * @author Lucas
  */
-public class Asteroid extends Sprite{
+public class Asteroid extends entidade{
     private static final double MIN_ROTATION = 0.0075;
 	
 	/**
@@ -48,9 +48,9 @@ public class Asteroid extends Sprite{
         
     private boolean needsRemoval;
     
-    private Vector2 position;
+    //private Vector2 position;
     
-    protected Vector2 velocity;
+    //protected Vector2 velocity;
     
     
     public Asteroid(Random random) {
@@ -88,7 +88,7 @@ public class Asteroid extends Sprite{
 		 * appear to have a different starting position than it's parent or sibling.
 		 */
 		for(int i = 0; i < SPAWN_UPDATES; i++) {
-			atualiza(null);
+			mover(null);
 		}
 	}
 	
@@ -112,7 +112,8 @@ public class Asteroid extends Sprite{
 	}
 	
 	
-	public void atualiza(ProjetoAsteroids game) {
+        @Override
+	public void mover(ProjetoAsteroids game) {
 		game.janela.update();
                 position.add(velocity);
 		if(position.x < 0.0f) {
@@ -151,6 +152,7 @@ public class Asteroid extends Sprite{
 		this.needsRemoval = true;
 	}
         
+        @Override
 	public void handleCollision(ProjetoAsteroids game, GameObject other) {
 		//Prevent collisions with other asteroids.
 		if(other.getClass() != Asteroid.class) {
@@ -172,5 +174,5 @@ public class Asteroid extends Sprite{
 			game.addScore(getKillScore());		
 		}
 	}
-    
+
 }

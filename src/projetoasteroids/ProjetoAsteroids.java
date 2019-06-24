@@ -36,10 +36,10 @@ public class ProjetoAsteroids {
     private static final int DISPLAY_LEVEL_LIMIT = 60;
     
     //Lista de entidades na Tela
-    private List<Sprite> entidades;
+    private List<entidade> entidades;
     
     //Lista de entidades a serem add na Tela
-    private List<Sprite> novas_entidades;
+    private List<entidade> novas_entidades;
     
     //instancia do jogo
     //private Painel jogo;
@@ -109,7 +109,7 @@ public class ProjetoAsteroids {
             
                 background.draw();
                 updateGame();        
-                Iterator<Sprite> iter = getEntidades().iterator();
+                Iterator<entidade> iter = getEntidades().iterator();
 		while(iter.hasNext()) {
 			Sprite entidade = iter.next();
 			/*
@@ -264,8 +264,9 @@ public class ProjetoAsteroids {
 		 */
 		if(showLevelCooldown == 0) {
                     //Iterate through the Entities and update their states.
-			for(Sprite entity : entidades) {
-				entity.draw();
+			for(entidade entity : entidades) {
+				//entity.mover(this);
+                                entity.draw();
 			}
                         
                         for(int i = 0; i < entidades.size(); i++) {
@@ -279,7 +280,7 @@ public class ProjetoAsteroids {
 				}
 			}
                         
-                        Iterator<Sprite> iter = entidades.iterator();
+                        Iterator<entidade> iter = entidades.iterator();
 			//while(iter.hasNext()) {
 				//if(iter.next().needsRemoval()) {
 				//	iter.remove();
@@ -311,7 +312,7 @@ public class ProjetoAsteroids {
         return this.nave;
     }
     
-    public List<Sprite> getEntidades() {
+    public List<entidade> getEntidades() {
 		return entidades;
     }
    
@@ -322,7 +323,7 @@ public class ProjetoAsteroids {
     public Random getRandom() {
 		return random;
 	}
-    public void registraEntidade(Sprite entity) {
+    public void registraEntidade(entidade entity) {
 		novas_entidades.add(entity);
 	}
 }
