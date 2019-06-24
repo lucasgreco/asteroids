@@ -36,10 +36,10 @@ public class ProjetoAsteroids {
     private static final int DISPLAY_LEVEL_LIMIT = 60;
     
     //Lista de entidades na Tela
-    private List<Sprite> entidades;
+    private List<entidade> entidades;
     
     //Lista de entidades a serem add na Tela
-    private List<Sprite> novas_entidades;
+    private List<entidade> novas_entidades;
     
     //instancia do jogo
     //private Painel jogo;
@@ -49,10 +49,7 @@ public class ProjetoAsteroids {
 
     //Ramdom
     private Random random;
-    
-    //pontuação
-    private int pontuacao;
-	
+    	
     //vidas
     private int vidas;
 	
@@ -109,7 +106,7 @@ public class ProjetoAsteroids {
             
                 background.draw();
                 updateGame();        
-                Iterator<Sprite> iter = getEntidades().iterator();
+                Iterator<entidade> iter = getEntidades().iterator();
 		while(iter.hasNext()) {
 			Sprite entidade = iter.next();
 			/*
@@ -142,25 +139,20 @@ public class ProjetoAsteroids {
             
             if (teclado.keyDown(Keyboard.SPACE_KEY) ){
                     this.nave.atira(true);
+            } else{
+                    this.nave.atira(false);
             }
             
-            if (teclado.keyDown(Keyboard.UP_KEY) ){
-                    nave.y -= 2;
-            }
+            this.nave.up_pressionado = teclado.keyDown(Keyboard.UP_KEY); // nave.y -= 2;
             
-            if (teclado.keyDown(Keyboard.DOWN_KEY) ){
-                    nave.y += 2;
-            }
+            this.nave.down_pressionado = teclado.keyDown(Keyboard.DOWN_KEY); // nave.y += 2;
             
             if (teclado.keyDown(Keyboard.ESCAPE_KEY) ){
                     executando = false;
             }
-            if (teclado.keyDown(Keyboard.LEFT_KEY) ){
-                    nave.x-= 3;
-            }
-            if (teclado.keyDown(Keyboard.RIGHT_KEY) ){
-                    nave.x+= 3;
-            }
+            this.nave.left_pressionado = teclado.keyDown(Keyboard.LEFT_KEY); // nave.x-= 3;
+           
+            this.nave.right_pressionado = teclado.keyDown(Keyboard.RIGHT_KEY); // nave.x+= 3;
             
             janela.delay(5);
             
@@ -183,7 +175,7 @@ public class ProjetoAsteroids {
     
     private void updateGame() {
         
-        /*
+                /*
 		 * Here we add any pending entities to the world.
 		 * 
 		 * Two lists are required because we will frequently add entities to the
@@ -264,8 +256,9 @@ public class ProjetoAsteroids {
 		 */
 		if(showLevelCooldown == 0) {
                     //Iterate through the Entities and update their states.
-			for(Sprite entity : entidades) {
-				entity.draw();
+			for(entidade entity : entidades) {
+				entity.mover(this);
+                                entity.draw();
 			}
                         
                         for(int i = 0; i < entidades.size(); i++) {
@@ -279,11 +272,11 @@ public class ProjetoAsteroids {
 				}
 			}
                         
-                        Iterator<Sprite> iter = entidades.iterator();
+                        Iterator<entidade> iter = entidades.iterator();
 			//while(iter.hasNext()) {
-				//if(iter.next().needsRemoval()) {
-				//	iter.remove();
-				//}
+			//	if(iter.next().needsRemoval()) {
+			//	iter.remove();
+			//      }
 			//}
 		}
 	}
@@ -311,18 +304,18 @@ public class ProjetoAsteroids {
         return this.nave;
     }
     
-    public List<Sprite> getEntidades() {
+    public List<entidade> getEntidades() {
 		return entidades;
     }
    
     public void addScore(int score) {
-		this.pontuacao += score;
+		this.pontos += score;
 	}
     
     public Random getRandom() {
 		return random;
 	}
-    public void registraEntidade(Sprite entity) {
+    public void registraEntidade(entidade entity) {
 		novas_entidades.add(entity);
 	}
 }

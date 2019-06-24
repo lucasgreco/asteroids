@@ -8,12 +8,12 @@ package projetoasteroids;
 import java.util.Random;
 import jplay.GameObject;
 import jplay.Sprite;
-
+import Vector2;
 /**
  *
  * @author Lucas
  */
-public class Asteroid extends Sprite{
+public class Asteroid extends entidade{
     private static final double MIN_ROTATION = 0.0075;
 	
 	/**
@@ -48,13 +48,13 @@ public class Asteroid extends Sprite{
         
     private boolean needsRemoval;
     
-    private Vector2 position;
+    //private Vector2 position;
     
-    protected Vector2 velocity;
+    //protected Vector2 velocity;
     
     
     public Asteroid(Random random) {
-		super(AsteroidSize.Large.sprite);
+		super(AsteroidSize.Large.sprite,calculatePosition(random), calculateVelocity(random), AsteroidSize.Large.raio, AsteroidSize.Large.killValue);
                 //super("sprites/meteorBrown_big1.png");
 		this.rotationSpeed = -MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
 		this.size = AsteroidSize.Large;
@@ -88,7 +88,7 @@ public class Asteroid extends Sprite{
 		 * appear to have a different starting position than it's parent or sibling.
 		 */
 		for(int i = 0; i < SPAWN_UPDATES; i++) {
-			atualiza(null);
+			mover(null);
 		}
 	}
 	
@@ -112,7 +112,11 @@ public class Asteroid extends Sprite{
 	}
 	
 	
-	public void atualiza(ProjetoAsteroids game) {
+        @Override
+	public void mover(ProjetoAsteroids game) {
+                position.x = this.x;
+                position.y = this.y;
+            
 		game.janela.update();
                 position.add(velocity);
 		if(position.x < 0.0f) {
@@ -128,6 +132,10 @@ public class Asteroid extends Sprite{
 		position.y %= ProjetoAsteroids.WORLD_SIZEY;
                 this.y %= ProjetoAsteroids.WORLD_SIZEY;
 		rotate(rotationSpeed); //Rotate the image each frame.
+                
+                this.x = position.x;
+                this.y = position.y;
+            
 	}
         
         public void rotate(double amount) {
@@ -151,6 +159,7 @@ public class Asteroid extends Sprite{
 		this.needsRemoval = true;
 	}
         
+        @Override
 	public void handleCollision(ProjetoAsteroids game, GameObject other) {
 		//Prevent collisions with other asteroids.
 		if(other.getClass() != Asteroid.class) {
@@ -172,5 +181,5 @@ public class Asteroid extends Sprite{
 			game.addScore(getKillScore());		
 		}
 	}
-    
+
 }
