@@ -23,13 +23,17 @@ public abstract class entidade extends Sprite{
     
     protected double radius;
     
-    private boolean needsRemoval;
+    public boolean needsRemoval;
     
-    private int killScore;
+    public int killScore;
+    
+    public double frame;
 
-    public entidade(String fileName, Vector2 position, Vector2 velocity, double radius, int killScore) {
-        super(fileName);
+    public entidade(String fileName,int frames, Vector2 position, Vector2 velocity, double radius, int killScore) {
+        super(fileName, frames);
         this.position = position;
+        this.x = this.position.x;
+        this.y = this.position.y;
 	this.velocity = velocity;
 	this.radius = radius;
 	this.rotation = 0.0f;
@@ -55,5 +59,12 @@ public abstract class entidade extends Sprite{
                 this.x = position.x;
                 this.y = position.y;
     }
-    
+
+    public boolean needsRemoval() {
+		return needsRemoval;
+	}
+    public void rotate(double amount) {
+		this.rotation += amount;
+		this.rotation %= Math.PI * 2;
+	}
 }

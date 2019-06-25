@@ -8,9 +8,9 @@ package projetoasteroids;
 import java.util.Iterator;
 import jplay.GameObject;
 import jplay.Sprite;
+import static projetoasteroids.NavePosicao.Angulo_90;
 
 
-import projetoasteroids.ProjetoAsteroids;
 /**
  *
  * @author Lucas
@@ -32,7 +32,7 @@ public class Nave extends entidade{
 	/**
 	 * The speed at which the ship rotates.
 	 */
-	private static final double ROTATION_SPEED = 0.052;
+	private static final double ROTATION_SPEED = 0.05;
 	
 	/**
 	 * The factor at which our ship slows down.
@@ -63,8 +63,9 @@ public class Nave extends entidade{
 	/**
 	 * Whether the ship should apply thrust when it updates.
 	 */
-	private boolean thrustPressed;
-    
+	
+        //public int direcao;
+        
         public boolean up_pressionado;
     
         public boolean down_pressionado;
@@ -72,19 +73,22 @@ public class Nave extends entidade{
         public boolean left_pressionado;
     
         public boolean right_pressionado;
-    
+        
+        public NavePosicao direcao;
     /**
      *
      */
     public Nave() {
-        super("sprites/playerShip1_blue.png",new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
- //       super("sprites/playerShip1_blue.png");
+      //  super("sprites/playerShip1_blue.png",2,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
+        super("sprites/navespritesheet.png",32,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
+
+        //       super("sprites/playerShip1_blue.png");
 //        this.position.x = 645;
  //       this.position.y = 450;
         this.x = 645;
         this.y = 450;
-        this.rotation = DEFAULT_ROTATION;
-        this.thrustPressed = false;
+        //this.rotation = DEFAULT_ROTATION;
+        
 	this.left_pressionado = false;
 	this.right_pressionado = false;
 	//this.firePressed = false;
@@ -92,6 +96,10 @@ public class Nave extends entidade{
 	//this.fireCooldown = 0;
 	//this.overheatCooldown = 0;
 	//this.animationFrame = 0;
+        this.direcao = Angulo_90;
+        //this.rotation = direcao.angulo;
+        //this.frame = direcao.frame;
+        //this.frame = 0;
         
     }
     
@@ -106,7 +114,7 @@ public class Nave extends entidade{
 */
     @Override
     public void handleCollision(ProjetoAsteroids game, GameObject other) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
@@ -129,26 +137,44 @@ public class Nave extends entidade{
 		 * }
 		 */
 		if(left_pressionado != right_pressionado) {
+                    
+                    //rotate(left_pressionado ? -ROTATION_SPEED : ROTATION_SPEED);
+                    
                     if(left_pressionado){
-                        this.x -= 3;
+                        direcao = direcao.getAnterior(direcao);
+                        //frame+= 0.05;
+                        //rotation -= 0.05;
+                        //rotation -= Math.PI / 32;
+                        //if(frame >15){
+                         //   frame = 0;
+                        //} 
                     }else{
-                        this.x += 3;
+                        direcao = direcao.getProx(direcao);
+                        //frame-= 0.05;
+                        //rotation += 0.05;
+                        //rotation += Math.PI /32;
+                        //if(frame < 0){
+                         //   frame = 15;
+                       // } 
                     }
-			//rotate(rotateLeftPressed ? -ROTATION_SPEED : ROTATION_SPEED);
+                    //direcao = (int)rotation;
+                    //setCurrFrame((int)frame);
+                    setCurrFrame(direcao.frame);
+			
 		}
 		
 		/*
 		 * Apply thrust to our ship's velocity, and ensure that the ship is not
 		 * going faster than the maximum magnitude.
 		 */
-                /*
-		if(thrustPressed) {
+                
+		if(up_pressionado) {
 			/*
 			 * Here we create a new vector based on our ship's rotation, and scale
 			 * it by our thrust's magnitude. Then we add that vector to our velocity.
 			 */
-                /*
-			velocity.add(new Vector2(rotation).scale(THRUST_MAGNITUDE));
+                
+			velocity.add(new Vector2(direcao.angulo).scale(THRUST_MAGNITUDE));
 			
 			/*
 			 * Here we determine whether our ship is going faster than is
@@ -159,7 +185,7 @@ public class Nave extends entidade{
 			 * If our velocity exceeds our maximum allowed velocity, we normalize
 			 * it (giving it a magnitude of 1.0), and scale it to be he maximum.
 			 */
-                /*
+                
 			if(velocity.getLengthSquared() >= MAX_VELOCITY_MAGNITUDE * MAX_VELOCITY_MAGNITUDE) {
 				velocity.normalize().scale(MAX_VELOCITY_MAGNITUDE);
 			}
@@ -169,7 +195,7 @@ public class Nave extends entidade{
 		 * If our ship is moving, slow it down slightly, which causes the ship
 		 * to some to a gradual stop.
 		 */
-                /*
+                
 		if(velocity.getLengthSquared() != 0.0) {
 			velocity.scale(SLOW_RATE);
 		}

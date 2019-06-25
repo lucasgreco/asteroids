@@ -7,8 +7,6 @@ package projetoasteroids;
 
 import java.util.Random;
 import jplay.GameObject;
-import jplay.Sprite;
-import Vector2;
 /**
  *
  * @author Lucas
@@ -46,7 +44,6 @@ public class Asteroid extends entidade{
     
     protected double rotation;
         
-    private boolean needsRemoval;
     
     //private Vector2 position;
     
@@ -54,7 +51,7 @@ public class Asteroid extends entidade{
     
     
     public Asteroid(Random random) {
-		super(AsteroidSize.Large.sprite,calculatePosition(random), calculateVelocity(random), AsteroidSize.Large.raio, AsteroidSize.Large.killValue);
+		super(AsteroidSize.Large.sprite,1,calculatePosition(random), calculateVelocity(random), AsteroidSize.Large.raio, AsteroidSize.Large.killValue);
                 //super("sprites/meteorBrown_big1.png");
 		this.rotationSpeed = -MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
 		this.size = AsteroidSize.Large;
@@ -73,11 +70,11 @@ public class Asteroid extends entidade{
 	 * @param random The Random instance.
 	 */
 	public Asteroid(Asteroid parent, AsteroidSize size, Random random) {
-                super(size.sprite);
+                super(size.sprite,1,parent.position, calculateVelocity(random), size.raio, size.killValue);
                 this.size = size;
-                Vector2 vetornovo = new Vector2(parent.position);
-                this.x = vetornovo.x;
-                this.y = vetornovo.y;
+                //Vector2 vetornovo = new Vector2(parent.position);
+                //this.x = vetornovo.x;
+                //this.y = vetornovo.y;
                 this.velocity = calculateVelocity(random);
 		this.rotationSpeed = MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
                 this.height = (int)size.raio;
@@ -88,7 +85,7 @@ public class Asteroid extends entidade{
 		 * appear to have a different starting position than it's parent or sibling.
 		 */
 		for(int i = 0; i < SPAWN_UPDATES; i++) {
-			mover(null);
+			this.mover(null);
 		}
 	}
 	
@@ -117,7 +114,7 @@ public class Asteroid extends entidade{
                 position.x = this.x;
                 position.y = this.y;
             
-		game.janela.update();
+//		game.janela.update();
                 position.add(velocity);
 		if(position.x < 0.0f) {
 			position.x += ProjetoAsteroids.WORLD_SIZEX;
@@ -166,10 +163,11 @@ public class Asteroid extends entidade{
 			//Only spawn "children" if we're not a Small asteroid.
 			if(size != AsteroidSize.Small) {
 				//Determine the Size of the children.
-				AsteroidSize spawnSize = AsteroidSize.values()[size.ordinal() - 1];
+				AsteroidSize spawnSize = AsteroidSize.values()[size.ordinal() -1];
 				
 				//Create the children Asteroids.
 				for(int i = 0; i < 2; i++) {
+                                        
 					game.registraEntidade(new Asteroid(this, spawnSize, game.getRandom()));
 				}
 			}

@@ -60,7 +60,7 @@ public class ProjetoAsteroids {
     private boolean restartGame;
     
     //se o jogo esta executando
-    private boolean executando;
+    boolean executando;
     
     //pontuacao
     private int pontos;
@@ -258,26 +258,26 @@ public class ProjetoAsteroids {
                     //Iterate through the Entities and update their states.
 			for(entidade entity : entidades) {
 				entity.mover(this);
-                                entity.draw();
+                                //entity.draw();
 			}
                         
                         for(int i = 0; i < entidades.size(); i++) {
-				Sprite a = entidades.get(i);
+				entidade a = entidades.get(i);
 				for(int j = i + 1; j < entidades.size(); j++) {
-					Sprite b = entidades.get(j);
+					entidade b = entidades.get(j);
 					if(i != j && a.collided(b) && ((a != nave && b != nave) || deathCooldown <= INVULN_COOLDOWN_LIMIT)) {
-						//a.handleCollision(this, b);
-						//b.handleCollision(this, a);
+						a.handleCollision(this, b);
+						b.handleCollision(this, a);
 					}
 				}
 			}
                         
                         Iterator<entidade> iter = entidades.iterator();
-			//while(iter.hasNext()) {
-			//	if(iter.next().needsRemoval()) {
-			//	iter.remove();
-			//      }
-			//}
+			while(iter.hasNext()) {
+				if(iter.next().needsRemoval()) {
+                                    iter.remove();
+			      }
+			}
 		}
 	}
     
