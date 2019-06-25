@@ -5,7 +5,9 @@
  */
 package projetoasteroids;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import jplay.GameObject;
 import jplay.Sprite;
 import static projetoasteroids.NavePosicao.Angulo_90;
@@ -59,7 +61,7 @@ public class Nave extends entidade{
 	 * The number of cycles that must elapse before we stop overheating.
 	 */
 	private static final int MAX_OVERHEAT = 30;
-	
+	private int CONTADOR_VIRAR;
 	/**
 	 * Whether the ship should apply thrust when it updates.
 	 */
@@ -75,13 +77,45 @@ public class Nave extends entidade{
         public boolean right_pressionado;
         
         public NavePosicao direcao;
+        
+        private List<Bullet> bullets;
+        
+        /**
+	 * Whether the ship should fire a bullet when it updates.
+	 */
+	private boolean firePressed;
+		
+	/**
+	 * Whether the ship is allowed to fire a bullet.
+	 */
+	private boolean firingEnabled;
+	
+	/**
+	 * The number of consecutive shots fired.
+	 */
+	private int consecutiveShots;
+	
+	/**
+	 * The cooldown timer for firing.
+	 */
+	private int fireCooldown;
+	
+	/**
+	 * The cooldown timer for overheating.
+	 */
+	private int overheatCooldown;
+        
+        
+        //alterna tiros entre direita e esquerda
+        public boolean alterna;
+        
     /**
      *
      */
     public Nave() {
       //  super("sprites/playerShip1_blue.png",2,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
         super("sprites/navespritesheet.png",32,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
-
+        this.bullets = new ArrayList<>();
         //       super("sprites/playerShip1_blue.png");
 //        this.position.x = 645;
  //       this.position.y = 450;
@@ -91,20 +125,21 @@ public class Nave extends entidade{
         
 	this.left_pressionado = false;
 	this.right_pressionado = false;
-	//this.firePressed = false;
-	//this.firingEnabled = true;
-	//this.fireCooldown = 0;
-	//this.overheatCooldown = 0;
+	this.firePressed = false;
+	this.firingEnabled = true;
+	this.fireCooldown = 0;
+	this.overheatCooldown = 0;
 	//this.animationFrame = 0;
         this.direcao = Angulo_90;
         //this.rotation = direcao.angulo;
         //this.frame = direcao.frame;
         //this.frame = 0;
+        this.CONTADOR_VIRAR = 7;
         
     }
     
     public void atira(boolean estado){
-        
+        this.firePressed = estado;
     }
     
     /*
@@ -137,28 +172,19 @@ public class Nave extends entidade{
 		 * }
 		 */
 		if(left_pressionado != right_pressionado) {
-                    
-                    //rotate(left_pressionado ? -ROTATION_SPEED : ROTATION_SPEED);
-                    
+                    if(CONTADOR_VIRAR > 0){
+                        CONTADOR_VIRAR--;
+                    }else {
+                      CONTADOR_VIRAR = 7;  
+                                     
                     if(left_pressionado){
                         direcao = direcao.getAnterior(direcao);
-                        //frame+= 0.05;
-                        //rotation -= 0.05;
-                        //rotation -= Math.PI / 32;
-                        //if(frame >15){
-                         //   frame = 0;
-                        //} 
+                        
                     }else{
                         direcao = direcao.getProx(direcao);
-                        //frame-= 0.05;
-                        //rotation += 0.05;
-                        //rotation += Math.PI /32;
-                        //if(frame < 0){
-                         //   frame = 15;
-                       // } 
+                        
                     }
-                    //direcao = (int)rotation;
-                    //setCurrFrame((int)frame);
+                    }
                     setCurrFrame(direcao.frame);
 			
 		}
@@ -203,7 +229,7 @@ public class Nave extends entidade{
 		/*
 		 * Loop through each bullet and remove it from the list if necessary.
 		 */
-                /*
+                
 		Iterator<Bullet> iter = bullets.iterator();
 		while(iter.hasNext()) {
 			Bullet bullet = iter.next();
@@ -216,7 +242,7 @@ public class Nave extends entidade{
 		 * Decrement the fire and overheat cooldowns, and determine if we can fire another
 		 * bullet.
 		 */
-                /*
+                
 		this.fireCooldown--;
 		this.overheatCooldown--;
 		if(firingEnabled && firePressed && fireCooldown <= 0 && overheatCooldown <= 0) {
@@ -227,13 +253,14 @@ public class Nave extends entidade{
 			 * If a new bullet can be fired, we reset the fire cooldown, and
 			 * register a new bullet to the game world.
 			 */
-                /*
+                
 			if(bullets.size() < MAX_BULLETS) {
 				this.fireCooldown = FIRE_RATE;
 				
-				Bullet bullet = new Bullet(this, rotation);
+				Bullet bullet = new Bullet(this);
 				bullets.add(bullet);
-				game.registerEntity(bullet);
+				game.registraEntidade(bullet);
+                                alterna = !alterna;
 			}
 			
 			/*
@@ -245,7 +272,7 @@ public class Nave extends entidade{
 			 * asteroids in one burst if we're accurate enough, and will prevent
 			 * us from firing a continuous stream of bullets until we start missing.
 			 */
-                /*
+                
 			this.consecutiveShots++;
 			if(consecutiveShots == MAX_CONSECUTIVE_SHOTS) {
 				this.consecutiveShots = 0;
@@ -255,7 +282,7 @@ public class Nave extends entidade{
 			//Decrement the number of consecutive shots, since we're not trying to fire.
 			this.consecutiveShots--;
 		}
-                */
+                
                 
                 }
     

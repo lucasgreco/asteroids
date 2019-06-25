@@ -148,14 +148,7 @@ public class Asteroid extends entidade{
 	public int getKillScore() {
 		return this.size.killValue;
 	}
-	
-	/**
-	 * Flags that this Entity should be removed from the world.
-	 */
-	public void flagForRemoval() {
-		this.needsRemoval = true;
-	}
-        
+       
         @Override
 	public void handleCollision(ProjetoAsteroids game, GameObject other) {
 		//Prevent collisions with other asteroids.

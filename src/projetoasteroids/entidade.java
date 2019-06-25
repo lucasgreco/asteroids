@@ -63,6 +63,9 @@ public abstract class entidade extends Sprite{
     public boolean needsRemoval() {
 		return needsRemoval;
 	}
+    public void flagForRemoval() {
+		this.needsRemoval = true;
+	}
     public void rotate(double amount) {
 		this.rotation += amount;
 		this.rotation %= Math.PI * 2;
