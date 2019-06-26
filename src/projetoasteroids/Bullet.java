@@ -29,24 +29,22 @@ public class Bullet extends entidade{
         public NavePosicao direcao;
         
     public Bullet(Nave origem) {   
-        super("sprites/laserBlue16.png", 1, origem.position,new Vector2(origem.direcao.angulo).scale(VELOCITY_MAGNITUDE), 2.0,0);
+        super("sprites/lasespritesheet.png", 32, origem.position,new Vector2(origem.direcao.angulo).scale(VELOCITY_MAGNITUDE), 2.0,0);
         this.direcao = origem.direcao;
+        this.position.add(new Vector2(origem.direcao.angulo).scale(40));
         if(origem.alterna){
-            this.position.add(new Vector2(this.direcao.angulo));
-            //this.x = position.scale(this.direcao.angulo).x;
-            //this.y = position.scale(this.direcao.angulo).y;
-        }else{
-            this.position.x +=1;
-            this.x = position.scale(this.direcao.angulo).x;
-            //this.y = position.scale(this.direcao.angulo).y;
+            this.position.add(new Vector2(origem.direcao.angulo + Math.PI/2).scale(17));
         }
+        //this.position.y += 10* Math.sin(direcao.angulo - Math.PI/2);
         this.lifespan = MAX_LIFESPAN;
+        this.x = position.x;
+        this.y = position.y;
     }
     
     @Override
 	public void mover(ProjetoAsteroids game) {
 		super.mover(game);
-		
+		setCurrFrame(direcao.frame);
 		//Decrement the lifespan of the bullet, and remove it if needed.
 		this.lifespan--;
 		if(lifespan <= 0) {

@@ -114,13 +114,13 @@ public class Nave extends entidade{
      */
     public Nave() {
       //  super("sprites/playerShip1_blue.png",2,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
-        super("sprites/navespritesheet.png",32,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10.0, 0);
+        super("sprites/navespritesheet.png",32,new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0), new Vector2(0.0, 0.0), 10, 0);
         this.bullets = new ArrayList<>();
         //       super("sprites/playerShip1_blue.png");
 //        this.position.x = 645;
  //       this.position.y = 450;
-        this.x = 645;
-        this.y = 450;
+        this.x = (ProjetoAsteroids.WORLD_SIZEX / 2.0) - 50;
+        this.y = ProjetoAsteroids.WORLD_SIZEY / 2.0;
         //this.rotation = DEFAULT_ROTATION;
         
 	this.left_pressionado = false;
@@ -135,7 +135,7 @@ public class Nave extends entidade{
         //this.frame = direcao.frame;
         //this.frame = 0;
         this.CONTADOR_VIRAR = 7;
-        
+       
     }
     
     public void atira(boolean estado){
@@ -149,7 +149,9 @@ public class Nave extends entidade{
 */
     @Override
     public void handleCollision(ProjetoAsteroids game, GameObject other) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       if(other.getClass() == Asteroid.class) {
+			game.killPlayer();
+		}
     }
     
     @Override
@@ -286,5 +288,17 @@ public class Nave extends entidade{
                 
                 }
     
+    public void setFiringEnabled(boolean state) {
+		this.firingEnabled = state;
+	}
+    
+    public void reset() {
+		this.rotation = DEFAULT_ROTATION;
+		position.set(ProjetoAsteroids.WORLD_SIZEX / 2.0 - 50, ProjetoAsteroids.WORLD_SIZEY / 2.0);
+                this.x = position.x;
+                this.y = position.y;
+		velocity.set(0.0, 0.0);
+		bullets.clear();
+	}
     
 }

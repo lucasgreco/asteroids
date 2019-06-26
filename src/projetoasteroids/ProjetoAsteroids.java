@@ -5,6 +5,7 @@
  */
 package projetoasteroids;
 
+import static java.awt.Color.yellow;
 import jplay.Window;
 import jplay.GameImage;
 import jplay.GameObject;
@@ -23,9 +24,9 @@ import java.util.Random;
  */
 public class ProjetoAsteroids {
     
-    public static final int WORLD_SIZEX = 1200;
+    public static final int WORLD_SIZEX = 1600;
     
-    public static final int WORLD_SIZEY = 750;
+    public static final int WORLD_SIZEY = 900;
     
     private static final int DEATH_COOLDOWN_LIMIT = 200;
     
@@ -34,6 +35,8 @@ public class ProjetoAsteroids {
     private static final int INVULN_COOLDOWN_LIMIT = 0;
     
     private static final int DISPLAY_LEVEL_LIMIT = 60;
+    
+    private static final int RESET_COOLDOWN_LIMIT = 120;
     
     //Lista de entidades na Tela
     private List<entidade> entidades;
@@ -63,7 +66,7 @@ public class ProjetoAsteroids {
     boolean executando;
     
     //pontuacao
-    private int pontos;
+    private Integer pontos;
     
     //nivel de dificuldade
     private int level;
@@ -99,12 +102,23 @@ public class ProjetoAsteroids {
         this.janela = new Window(WORLD_SIZEX,WORLD_SIZEY);
         Keyboard teclado = janela.getKeyboard();
         GameImage background = new GameImage("sprites/darkPurple.png");
-        
-        
-      
+        //GameImage placar_vida = new GameImage("sprite/playerLife1_blue.png");
+        Painel placar_vidaimg = new Painel("sprites/playerLife1_blue.png", new Vector2(20,20));
+        Painel placar_vezes = new Painel("sprites/sprites fonte/PNG/UI/numeralX.png", new Vector2(70,27));
+
         while(executando){
             
                 background.draw();
+                Painel placar_vida = new Painel(new Numeros(vidas).getSprite(), new Vector2(100,27));
+                String pontuacaostring = pontos.toString();
+                //janela.drawText(pontuacaostring, 500, 27, yellow); 
+                
+                for (int i=0; i<pontuacaostring.length(); i++) {
+                    char c = pontuacaostring.charAt(i);
+                    Painel placar_numero = new Painel(new Numeros(c).getSprite(), new Vector2(1480+(25*(i+1)),27));
+                    placar_numero.draw();
+                }
+                
                 updateGame();        
                 Iterator<entidade> iter = getEntidades().iterator();
 		while(iter.hasNext()) {
@@ -132,8 +146,12 @@ public class ProjetoAsteroids {
                                         entidade.draw();
 					
 				}
+                                
 			}	
 		}
+                placar_vida.draw();
+                placar_vezes.draw();
+                placar_vidaimg.draw();
             janela.update();
  
             
@@ -154,7 +172,7 @@ public class ProjetoAsteroids {
            
             this.nave.right_pressionado = teclado.keyDown(Keyboard.RIGHT_KEY); // nave.x+= 3;
             
-            janela.delay(5);
+            janela.delay(4);
             
             
             
@@ -202,8 +220,8 @@ public class ProjetoAsteroids {
                 /*
 		 * Restart the game if needed.
 		 */
-		if(isGameOver && restartGame) {
-			//reiniciar();
+		if(checkForRestart()) {
+			reiniciar();
 		}
                 
                 /*
@@ -219,8 +237,8 @@ public class ProjetoAsteroids {
 			resetListaEntidades();
 			
 			//Reset the player's entity to it's default state, and re-enable firing.
-			//nave.reset();
-			//nave.setFiringEnabled(true);
+			nave.reset();
+			nave.setFiringEnabled(true);
 			
 			//Add the asteroids to the world.
 			for(int i = 0; i < level + 2; i++) {
@@ -238,13 +256,13 @@ public class ProjetoAsteroids {
 			
 			//Reset the entity to it's default spawn state, and disable firing.
 			case RESPAWN_COOLDOWN_LIMIT:
-				//nave.reset();
-				//nave.setFiringEnabled(false);
+				nave.reset();
+				nave.setFiringEnabled(false);
 				break;
 			
 			//Re-enable the ability to fire, as we're no longer invulnerable.
 			case INVULN_COOLDOWN_LIMIT:
-				//nave.setFiringEnabled(true);
+				nave.setFiringEnabled(true);
 				break;
 			
 			}
@@ -318,4 +336,40 @@ public class ProjetoAsteroids {
     public void registraEntidade(entidade entity) {
 		novas_entidades.add(entity);
 	}
+    
+    
+    public void killPlayer() {
+		//Decrement the number of lives that we still have.
+		this.vidas--;
+	
+		/*
+		 * If there are no lives remaining, prepare the game over state variables,
+		 * otherwise prepare the death cooldown.
+		 * 
+		 * Note that death cooldown is set to Integer.MAX_VALUE in the event of a
+		 * game over. While finite, the amount of time it would take for it to
+		 * reach zero is far longer than anyone would care to run the program
+		 * for.
+		 */
+		if(vidas == 0) {
+			this.isGameOver = true;
+			this.restartCooldown = RESET_COOLDOWN_LIMIT;
+			this.deathCooldown = Integer.MAX_VALUE;
+		} else {
+			this.deathCooldown = DEATH_COOLDOWN_LIMIT;
+		}
+		
+		//Disable the ability to fire.
+		nave.setFiringEnabled(false);
+	}
+    
+    
+    private boolean checkForRestart() {
+		boolean restart = (isGameOver && restartCooldown <= 0);
+		if(restart) {
+			restartGame = true;
+		}
+		return restart;
+	}
+    
 }
