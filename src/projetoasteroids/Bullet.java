@@ -29,7 +29,7 @@ public class Bullet extends entidade{
         public NavePosicao direcao;
         
     public Bullet(Nave origem) {   
-        super("sprites/lasespritesheet.png", 32, origem.position,new Vector2(origem.direcao.angulo).scale(VELOCITY_MAGNITUDE), 2.0,0);
+        super("sprites/lasespritesheet.png", 32, origem.position,new Vector2(origem.direcao.angulo).scale(VELOCITY_MAGNITUDE).add(origem.velocity), 2.0,0);
         this.direcao = origem.direcao;
         this.position.add(new Vector2(origem.direcao.angulo).scale(40));
         if(origem.alterna){

@@ -24,7 +24,7 @@ import java.util.Random;
  */
 public class ProjetoAsteroids {
     
-    public static final int WORLD_SIZEX = 1600;
+    public static final int WORLD_SIZEX = 1200;
     
     public static final int WORLD_SIZEY = 900;
     
@@ -115,7 +115,7 @@ public class ProjetoAsteroids {
                 
                 for (int i=0; i<pontuacaostring.length(); i++) {
                     char c = pontuacaostring.charAt(i);
-                    Painel placar_numero = new Painel(new Numeros(c).getSprite(), new Vector2(1480+(25*(i+1)),27));
+                    Painel placar_numero = new Painel(new Numeros(c).getSprite(), new Vector2(WORLD_SIZEX -(25*(i+1)),27));
                     placar_numero.draw();
                 }
                 

@@ -95,7 +95,8 @@ public class Asteroid extends entidade{
 	 * @return The spawn point.
 	 */
 	private static Vector2 calculatePosition(Random random) {
-		Vector2 vec = new Vector2(ProjetoAsteroids.WORLD_SIZEX / 2.0, ProjetoAsteroids.WORLD_SIZEY / 2.0);
+		Vector2 vec = new Vector2(ProjetoAsteroids.WORLD_SIZEX, ProjetoAsteroids.WORLD_SIZEY);
+                
 		return vec.add(new Vector2(random.nextDouble() * Math.PI * 2).scale(MIN_DISTANCE + random.nextDouble() * DISTANCE_VARIANCE));
 	}
 	
