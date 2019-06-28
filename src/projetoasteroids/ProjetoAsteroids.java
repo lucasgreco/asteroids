@@ -6,6 +6,11 @@
 package projetoasteroids;
 
 import static java.awt.Color.yellow;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
 import jplay.Window;
 import jplay.GameImage;
 import jplay.GameObject;
@@ -17,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+
 
 /**
  *
@@ -34,9 +40,9 @@ public class ProjetoAsteroids {
     
     private static final int INVULN_COOLDOWN_LIMIT = 0;
     
-    private static final int DISPLAY_LEVEL_LIMIT = 60;
+    private static final int DISPLAY_LEVEL_LIMIT = 200;
     
-    private static final int RESET_COOLDOWN_LIMIT = 120;
+    private static final int RESET_COOLDOWN_LIMIT = 200;
     
     //Lista de entidades na Tela
     private List<entidade> entidades;
@@ -83,14 +89,14 @@ public class ProjetoAsteroids {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FontFormatException {
         // TODO code application logic here   
         ProjetoAsteroids game = new ProjetoAsteroids();
         game.iniciar();
     }
     
     
-    private void iniciar() {
+    private void iniciar() throws FontFormatException {
         this.random = new Random();
         this.entidades = new LinkedList<>();
 	this.novas_entidades = new ArrayList<>();
@@ -105,13 +111,16 @@ public class ProjetoAsteroids {
         //GameImage placar_vida = new GameImage("sprite/playerLife1_blue.png");
         Painel placar_vidaimg = new Painel("sprites/playerLife1_blue.png", new Vector2(20,20));
         Painel placar_vezes = new Painel("sprites/sprites fonte/PNG/UI/numeralX.png", new Vector2(70,27));
+        
 
+        
         while(executando){
-            
                 background.draw();
                 Painel placar_vida = new Painel(new Numeros(vidas).getSprite(), new Vector2(100,27));
+                //String pontuacaostring = pontos.toString();
+               
                 String pontuacaostring = pontos.toString();
-                //janela.drawText(pontuacaostring, 500, 27, yellow); 
+                //janela.drawText(pontuacaostring, 30, 27, yellow); 
                 
                 for (int i=0; i<pontuacaostring.length(); i++) {
                     char c = pontuacaostring.charAt(i);
@@ -208,6 +217,14 @@ public class ProjetoAsteroids {
 		 */
 		if(restartCooldown > 0) {
 			this.restartCooldown--;
+                        Painel perdeu = new Painel("sprites/lose.png", new Vector2((WORLD_SIZEX /2.0)-200,(WORLD_SIZEY /2.0)-200));
+                        perdeu.draw();
+                        String pontuacaostring = pontos.toString();
+                       for (int i=0; i<pontuacaostring.length(); i++) {
+                            char c = pontuacaostring.charAt(i);
+                            Painel placar_numero = new Painel(new Numeros(c).getSprite(), new Vector2((WORLD_SIZEX /2.0)+57 -(25*(i+1)),(WORLD_SIZEY /2.0)-100));
+                            placar_numero.draw();
+                        }
 		}
                 
                 /*
@@ -232,7 +249,7 @@ public class ProjetoAsteroids {
 			//Increment the current level, and set the show level cooldown.
 			this.level++;
 			this.showLevelCooldown = DISPLAY_LEVEL_LIMIT;
-			
+                        
 			//Reset the entity lists (to remove bullets).
 			resetListaEntidades();
 			
@@ -296,7 +313,19 @@ public class ProjetoAsteroids {
                                     iter.remove();
 			      }
 			}
-		}
+		}else{
+                    if(this.level == 1){
+                        Painel passou_nivel = new Painel("sprites/win.png", new Vector2((WORLD_SIZEX /2.0)-200,(WORLD_SIZEY /2.0)-200));
+                        passou_nivel.draw();
+                        Painel palavra_nivel = new Painel("sprites/level.png", new Vector2((WORLD_SIZEX /2.0)-40,(WORLD_SIZEY /2.0)-100));
+                        palavra_nivel.draw();
+                        Painel quantidade_nivel = new Painel(new Numeros(this.level).getSprite(), new Vector2((WORLD_SIZEX /2.0)+70,(WORLD_SIZEY /2.0)-100));
+                        quantidade_nivel.draw();
+                    }else{
+                        Painel passou_nivel = new Painel("sprites/start.png", new Vector2((WORLD_SIZEX /2.0)-150,(WORLD_SIZEY /2.0)-200));
+                        passou_nivel.draw();
+                    }
+                }
 	}
     
     private boolean areEnemiesDead() {

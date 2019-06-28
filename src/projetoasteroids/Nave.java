@@ -294,7 +294,7 @@ public class Nave extends entidade{
     
     public void reset() {
 		this.rotation = DEFAULT_ROTATION;
-		position.set(ProjetoAsteroids.WORLD_SIZEX / 2.0 - 50, ProjetoAsteroids.WORLD_SIZEY / 2.0);
+		this.position.set(ProjetoAsteroids.WORLD_SIZEX / 2.0 - 50, ProjetoAsteroids.WORLD_SIZEY / 2.0);
                 this.x = position.x;
                 this.y = position.y;
 		velocity.set(0.0, 0.0);
