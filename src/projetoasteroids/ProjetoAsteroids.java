@@ -314,7 +314,7 @@ public class ProjetoAsteroids {
 			      }
 			}
 		}else{
-                    if(this.level == 1){
+                    if(this.level > 1){
                         Painel passou_nivel = new Painel("sprites/win.png", new Vector2((WORLD_SIZEX /2.0)-200,(WORLD_SIZEY /2.0)-200));
                         passou_nivel.draw();
                         Painel palavra_nivel = new Painel("sprites/level.png", new Vector2((WORLD_SIZEX /2.0)-40,(WORLD_SIZEY /2.0)-100));

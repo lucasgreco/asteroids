@@ -34,7 +34,7 @@ public enum NavePosicao {
         Angulo_236_25(13,-(Math.PI*21)/16),
         Angulo_247_5(14,-(Math.PI*22)/16),
         Angulo_258_75(15,-(Math.PI*23)/16),
-        Angulo_270(16,-(3*Math.PI*24)/16),
+        Angulo_270(16,-(Math.PI*24)/16),
         Angulo_281_25(17,-(Math.PI*25)/16),
         Angulo_292_5(18,-(Math.PI*26)/16),
         Angulo_303_75(19,-(Math.PI*27)/16),
