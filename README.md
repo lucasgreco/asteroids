@@ -14,22 +14,24 @@ Phillipe Simões. Mat:
 
 ## Preview
 
+![image](https://user-images.githubusercontent.com/50213462/60403762-e19bac00-9b77-11e9-9452-5ebfd4ec2358.png)
+
+![image](https://user-images.githubusercontent.com/50213462/60403784-0c860000-9b78-11e9-9a47-48bff22781f1.png)
+
+![image](https://user-images.githubusercontent.com/50213462/60403792-1871c200-9b78-11e9-88ef-50a3eb51e5f0.png)
 
 
-## Usage example
+## Relação entre as classes.
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+![image](https://user-images.githubusercontent.com/50213462/60403858-004e7280-9b79-11e9-8584-fbb3a0231223.png)
 
-_For more examples and usage, please refer to the [Wiki][wiki]._
 
-## Development setup
+## Especificações
 
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
+Para este projeto nós utilizamos:
+   * Netbeans IDE 8.2
+   * Biblioteca JPlay
 
-```sh
-make install
-npm test
-```
 
 ## Release History
 
