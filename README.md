@@ -59,4 +59,9 @@ Para calculos de direção, velocidade e etc utilizamos a Classe Vector2 do java
 
  ![image](https://user-images.githubusercontent.com/50213462/60405369-1151b080-9b86-11e9-8168-38ec35f9b805.png)
 
+A outra dificuldade foi chegar a conclusão de qual logica usariamos para armazenar as entidades que estão na tela, entao utilizamos duas listas. uma de entidades que ainda serão incluidas no jogo e outra para entidades que ja pertencem ao jogo.
+E toda iteração do looping checamos para saber se deveriam ou não serem removidas e para cada entidade na lista checamos se ela colidia com alguma outra entidade na lista.
+
+![image](https://user-images.githubusercontent.com/50213462/60405489-e582fa80-9b86-11e9-9560-0f39bdcb45e9.png)
+
 
