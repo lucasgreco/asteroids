@@ -33,11 +33,12 @@ Phillipe Simões. Mat:
    * Biblioteca JPlay
 ### Implementação
   
-  #### Constantes da Classe do jogo
-  ![image](https://user-images.githubusercontent.com/50213462/60404040-0e04f780-9b7b-11e9-98ba-c83c772c38bd.png)
+  #### Objetos do jogo
+   * Todos os objetos criados na tela herdam da classe entidade, que por sua vez é uma classe abstrata que extende a classe Sprite do JPlay
+   * Cada tipo de objeto em tela tem sua respectiva classe; Nave, Asteroid, Bullet e Painel(classe utilizada para objetos de Interface como pontuação e mensagens na tela).
   
   #### Atributos da Classe do jogo
-  ![image](https://user-images.githubusercontent.com/50213462/60404094-b87d1a80-9b7b-11e9-8181-678b1f7f8816.png)
+  
   
 ## Release History
 
