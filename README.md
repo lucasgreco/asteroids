@@ -65,3 +65,10 @@ E toda iteração do looping checamos para saber se deveriam ou não serem remov
 ![image](https://user-images.githubusercontent.com/50213462/60405489-e582fa80-9b86-11e9-9560-0f39bdcb45e9.png)
 
 
+## Bonus!
+![gif2](https://user-images.githubusercontent.com/50213462/60405816-df8e1900-9b88-11e9-9350-5430057e9ea1.gif)
+
+![gif1](https://user-images.githubusercontent.com/50213462/60405935-8f638680-9b89-11e9-8f1b-eac0f600b78a.gif)
+
+
+![gif3](https://user-images.githubusercontent.com/50213462/60406040-495af280-9b8a-11e9-9f8b-9c3f4510be16.gif)
