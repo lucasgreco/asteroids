@@ -39,7 +39,7 @@ Phillipe Simões. Mat:
 
 ![image](https://user-images.githubusercontent.com/50213462/60403858-004e7280-9b79-11e9-8584-fbb3a0231223.png)
 
-#### Dificuldades Encontradas durante o desenvolvimento.
+## Dificuldades Encontradas durante o desenvolvimento.
 
 A maior dificuldade foi fazer a rotação da nave com as setas direita e esquerda e que ela acelere para as direções.
 O JPlay nao permite a rotação de uma sprite então tivemos que utilizar a classe animação para realizar essa rotaçao.
@@ -54,4 +54,9 @@ Para isso fizemos uma classe enum com todos os angulos possiveis e seus respecti
 
  ![image](https://user-images.githubusercontent.com/50213462/60405139-c5ead280-9b84-11e9-8002-f87b3679bfec.png)
   
+Outro detalhe que tivemos que contornar foi trabalhar com as coordenadas x e y do JPlay;
+Para calculos de direção, velocidade e etc utilizamos a Classe Vector2 do java, e para usarmos o JPlay e o Vector2 para toda alteração no posicionamento dos objetos na tela precisavamos alterar na posição do tipo Vector2 e no x e y do Jplay.
+
+ ![image](https://user-images.githubusercontent.com/50213462/60405369-1151b080-9b86-11e9-8168-38ec35f9b805.png)
+
 
