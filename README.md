@@ -4,10 +4,10 @@
 
 Grupo:
 ```sh
-Lucas Greco Garcia Fernandes. Mat:114083023
+Lucas Greco Garcia Fernandes. 
 ```
 ```sh
-Phillipe Simões. Mat:
+Phillipe Simões.
 ```
 
 ![](header.png)
