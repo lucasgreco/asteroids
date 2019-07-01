@@ -172,7 +172,7 @@ public class ProjetoAsteroids {
            
             this.nave.right_pressionado = teclado.keyDown(Keyboard.RIGHT_KEY); // nave.x+= 3;
             
-            janela.delay(2);
+            janela.delay(3);
             
             
             
