@@ -9,19 +9,15 @@ import java.util.Random;
 import jplay.GameObject;
 /**
  *
- * @author Lucas
+ * @author PHILLIPE SIMOES
  */
 public class Asteroid extends entidade{
     private static final double MIN_ROTATION = 0.0075;
 	
-	/**
-	 * The maximum speed at which the asteroid can rotate.
-	 */
+	//rotacao do asteroid
     private static final double MAX_ROTATION = 0.0175;
 	
-	/**
-	 * The variation between the asteroid rotation speeds.
-	 */
+	//variacao da rotacao do asteroid
     private static final double ROTATION_VARIANCE = MAX_ROTATION - MIN_ROTATION;
     
     private static final double MIN_VELOCITY = 0.75;
@@ -44,16 +40,10 @@ public class Asteroid extends entidade{
     
     protected double rotation;
     private int vida;
-        
-    
-    //private Vector2 position;
-    
-    //protected Vector2 velocity;
-    
+
     
     public Asteroid(Random random) {
 		super(AsteroidSize.Large.sprite,1,calculatePosition(random), calculateVelocity(random), AsteroidSize.Large.raio, AsteroidSize.Large.killValue);
-                //super("sprites/meteorBrown_big1.png");
 		this.rotationSpeed = -MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
 		this.size = AsteroidSize.Large;
                 this.x = calculatePosition(random).x;
@@ -75,9 +65,6 @@ public class Asteroid extends entidade{
                 super(size.sprite,1,parent.position, calculateVelocity(random), size.raio, size.killValue);
                 this.size = size;
                 this.vida = this.size.vida;
-                //Vector2 vetornovo = new Vector2(parent.position);
-                //this.x = vetornovo.x;
-                //this.y = vetornovo.y;
                 this.velocity = calculateVelocity(random).add(parent.velocity);
 		this.rotationSpeed = MIN_ROTATION + (random.nextDouble() * ROTATION_VARIANCE);
                 this.height = (int)size.raio;
@@ -117,8 +104,6 @@ public class Asteroid extends entidade{
 	public void mover(ProjetoAsteroids game) {
                 position.x = this.x;
                 position.y = this.y;
-            
-//		game.janela.update();
                 position.add(velocity);
 		if(position.x < 0.0f) {
 			position.x += ProjetoAsteroids.WORLD_SIZEX;
@@ -143,37 +128,32 @@ public class Asteroid extends entidade{
 		this.rotation += amount;
 		this.rotation %= Math.PI * 2;
 	}
-
-	/*
-	public void draw(Graphics2D g, Game game) {
-		g.drawPolygon(size.polygon); //Draw the Asteroid.
-	}
-	*/
+        
 	public int getKillScore() {
 		return this.size.killValue;
 	}
        
         @Override
 	public void handleCollision(ProjetoAsteroids game, GameObject other) {
-		//Prevent collisions with other asteroids.
+		//nao colide com outros asteroids
 		if(other.getClass() != Asteroid.class) {
-			//Only spawn "children" if we're not a Small asteroid.
+			//só cria asteroids filhos de asteroids grandes
                         if (this.vida == 1){
                             if(size != AsteroidSize.Small) {
-                                    //Determine the Size of the children.
+                                    //determina tamanho do filho
                                     AsteroidSize spawnSize = AsteroidSize.values()[size.ordinal() -1];
 				
-                            		//Create the children Asteroids.
+                            		//cria os filhos.
                                     for(int i = 0; i < 2; i++) {
                                         
                                     	game.registraEntidade(new Asteroid(this, spawnSize, game.getRandom()));
                                     }
                             }
 			
-                            //Delete this Asteroid from the world.
+                            //deleta o asteroid
                             flagForRemoval();
 			
-                            //Award the player points for killing the Asteroid.
+                            //da a pontuacao para o jogador
                             game.addScore(getKillScore());
                         }else{
                             this.vida--;

@@ -16,14 +16,10 @@ public class Bullet extends entidade{
     
         private static final double VELOCITY_MAGNITUDE = 6.75;
 	
-	/**
-	 * The maximum number of cycles that a Bullet can exist.
-	 */
+	//maximo de tempo que a bala pode existir
 	private static final int MAX_LIFESPAN = 60;
 	
-	/**
-	 * The number of cycles this Bullet has existed.
-	 */
+	//tempo de vida da bala
 	private int lifespan;
 
         public NavePosicao direcao;
@@ -35,7 +31,7 @@ public class Bullet extends entidade{
         if(origem.alterna){
             this.position.add(new Vector2(origem.direcao.angulo + Math.PI/2).scale(17));
         }
-        //this.position.y += 10* Math.sin(direcao.angulo - Math.PI/2);
+        
         this.lifespan = MAX_LIFESPAN;
         this.x = position.x;
         this.y = position.y;
@@ -45,7 +41,7 @@ public class Bullet extends entidade{
 	public void mover(ProjetoAsteroids game) {
 		super.mover(game);
 		setCurrFrame(direcao.frame);
-		//Decrement the lifespan of the bullet, and remove it if needed.
+		//diminui a vida da bala e remove.
 		this.lifespan--;
 		if(lifespan <= 0) {
 			flagForRemoval();

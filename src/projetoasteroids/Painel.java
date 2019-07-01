@@ -6,7 +6,7 @@
 package projetoasteroids;
 
 import jplay.GameObject;
-import jplay.Sprite;
+
 
 /**
  *
