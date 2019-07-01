@@ -20,12 +20,6 @@ Phillipe Simões. Mat:
 
 ![image](https://user-images.githubusercontent.com/50213462/60403792-1871c200-9b78-11e9-88ef-50a3eb51e5f0.png)
 
-
-## Relação entre as classes.
-
-![image](https://user-images.githubusercontent.com/50213462/60403858-004e7280-9b79-11e9-8584-fbb3a0231223.png)
-
-
 ## Especificações
 
 ### Para este projeto nós utilizamos:
@@ -35,9 +29,17 @@ Phillipe Simões. Mat:
   
   #### Objetos do jogo
    * Todos os objetos criados na tela herdam da classe entidade, que por sua vez é uma classe abstrata que extende a classe Sprite do JPlay
-   * Cada tipo de objeto em tela tem sua respectiva classe; Nave, Asteroid, Bullet e Painel(classe utilizada para objetos de Interface como pontuação e mensagens na tela).
-  
-  #### Atributos da Classe do jogo
+   * Cada tipo de objeto em tela tem sua respectiva classe; 
+      * Nave 
+      * Asteroid 
+      * Bullet
+      * Painel (classe utilizada para objetos de Interface como pontuação e mensagens na tela).
+
+## Relação entre as classes.
+
+![image](https://user-images.githubusercontent.com/50213462/60403858-004e7280-9b79-11e9-8584-fbb3a0231223.png)
+
+#### Dificuldades Encontradas durante o desenvolvimento.
   
   
 
