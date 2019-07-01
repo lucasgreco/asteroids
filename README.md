@@ -28,11 +28,17 @@ Phillipe Simões. Mat:
 
 ## Especificações
 
-Para este projeto nós utilizamos:
+### Para este projeto nós utilizamos:
    * Netbeans IDE 8.2
    * Biblioteca JPlay
-
-
+### Implementação
+  
+  #### Constantes da Classe do jogo
+  ![image](https://user-images.githubusercontent.com/50213462/60404040-0e04f780-9b7b-11e9-98ba-c83c772c38bd.png)
+  
+  #### Atributos da Classe do jogo
+  ![image](https://user-images.githubusercontent.com/50213462/60404094-b87d1a80-9b7b-11e9-8181-678b1f7f8816.png)
+  
 ## Release History
 
 * 0.2.1
