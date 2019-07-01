@@ -26,9 +26,9 @@ import java.util.Random;
 public class ProjetoAsteroids {
     
     //resolução da janela
-    public static final int WORLD_SIZEX = 1200;
+    public static final int WORLD_SIZEX = 1280;
     //resolução da janela
-    public static final int WORLD_SIZEY = 900;
+    public static final int WORLD_SIZEY = 768;
     //tempo morto
     private static final int DEATH_COOLDOWN_LIMIT = 200;
     //tempo para poder jogar apos renascer
@@ -172,7 +172,7 @@ public class ProjetoAsteroids {
            
             this.nave.right_pressionado = teclado.keyDown(Keyboard.RIGHT_KEY); // nave.x+= 3;
             
-            janela.delay(4);
+            janela.delay(2);
             
             
             
