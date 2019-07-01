@@ -25,7 +25,7 @@ Phillipe Simões. Mat:
 ### Para este projeto nós utilizamos:
    * Netbeans IDE 8.2
    * Biblioteca JPlay
-### Implementação
+## Implementação
   
   #### Objetos do jogo
    * Todos os objetos criados na tela herdam da classe entidade, que por sua vez é uma classe abstrata que extende a classe Sprite do JPlay
@@ -40,6 +40,18 @@ Phillipe Simões. Mat:
 ![image](https://user-images.githubusercontent.com/50213462/60403858-004e7280-9b79-11e9-8584-fbb3a0231223.png)
 
 #### Dificuldades Encontradas durante o desenvolvimento.
-  
+
+A maior dificuldade foi fazer a rotação da nave com as setas direita e esquerda e que ela acelere para as direções.
+O JPlay nao permite a rotação de uma sprite então tivemos que utilizar a classe animação para realizar essa rotaçao.
+Para uma rotação suficientemente fluida fizemos uma sprite com 32 posições possiveis para a nave e o tiro.
+
+![image](https://user-images.githubusercontent.com/50213462/60405093-82906400-9b84-11e9-8996-5debd4e2646f.png)
+
+![image](https://user-images.githubusercontent.com/50213462/60405110-a358b980-9b84-11e9-93f5-25e38cb48795.png)
+
+
+Para isso fizemos uma classe enum com todos os angulos possiveis e seus respectivos frames da sprite:
+
+ ![image](https://user-images.githubusercontent.com/50213462/60405139-c5ead280-9b84-11e9-8002-f87b3679bfec.png)
   
 
