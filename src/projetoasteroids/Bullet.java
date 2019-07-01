@@ -17,7 +17,7 @@ public class Bullet extends entidade{
         private static final double VELOCITY_MAGNITUDE = 6.75;
 	
 	//maximo de tempo que a bala pode existir
-	private static final int MAX_LIFESPAN = 60;
+	private static final int MAX_LIFESPAN = 90;
 	
 	//tempo de vida da bala
 	private int lifespan;
