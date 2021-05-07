@@ -2,12 +2,9 @@
 > Implementação de uma versão do jogo Asteroids
 
 
-Grupo:
+Autor:
 ```sh
 Lucas Greco Garcia Fernandes. 
-```
-```sh
-Phillipe Simões.
 ```
 
 ![](header.png)
